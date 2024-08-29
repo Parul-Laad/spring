@@ -1,14 +1,17 @@
 package com.hexaware.hibernate.com.hexaware.hibernate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ITBook")
 public class Book {
 	
 	@Id
+	@GeneratedValue
 	int bNo;
 	
 	@Column
@@ -16,6 +19,11 @@ public class Book {
 	
 	@Column
 	Double price;
+	
+	@Transient
+	String subject;
+	
+	
 	
 	public int getbNo() {
 		return bNo;

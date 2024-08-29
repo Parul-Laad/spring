@@ -34,9 +34,9 @@ public class App {
 	    	 tx=ses.beginTransaction();
 	         
 	         Book b= new Book();
-	         b.setbNo(104);
-	         b.setName("java");
-	         b.setPrice(2000.9);
+	        // b.setbNo(105);
+	         b.setName("c++");
+	         b.setPrice(80.9);
 	         
 	         ses.save(b);
 	         tx.commit();
@@ -130,15 +130,97 @@ public class App {
 	    	
 
 	    }
+	   
+	   //Using hql query which is used to write custom queries
+	   void showData()
+	    {
+	    	 tx=ses.beginTransaction();
+	    	 
+	    	 //String hql="from Book B where B.price>:p "; 
+	    	 String hql="from Book B where B.price>:p and B.name=:nm";
+	    	 Query q =ses.createQuery(hql,Book.class);
+	    	 q.setParameter("p", 100.0);
+	    	 q.setParameter("nm", "dsa");
+	    	 List <Book> books=q.list();
+	    	 tx.commit();
+	    	
+	    	 System.out.println(books);
+	    	
+	    	
+
+	    	
+	    }
+	   
+	   void updatebyBookNo()
+	    {
+	    	 tx=ses.beginTransaction();
+	    	
+	    	 String hql="UPDATE Book B set B.name=:nm where B.bNo=:bn ";
+	    	
+	    	 Query q =ses.createQuery(hql);
+	    	
+	    	 q.setParameter("bn", 2);
+	    	 q.setParameter("nm", "EXpress ");
+
+			  int a=-1;
+			  q.executeUpdate();
+			  tx.commit();
+			  if(a==-1)
+			  {
+				   System.out.println("update");
+			  }
+			  else
+			  {
+				   System.out.println("name updated");
+			  }
+	    	
+	    	
+			  
+
+	    	
+	    }
+	   
+	   void removeHQL()
+	    {
+	    	 tx=ses.beginTransaction();
+	    	
+	    	 String hql="delete from Book B where B.bNo=:bn ";
+	    	
+	    	 Query q =ses.createQuery(hql);
+	    	
+	    	 q.setParameter("bn", 102);
+	    	
+
+		  int a=-1;
+		  q.executeUpdate();
+		  if(a==-1)
+		  {
+			   System.out.println("Removed");
+		  }
+		  else
+		  {
+			   System.out.println("not  remove");
+		  }
+		  tx.commit();
+			
+	
+	    }
+	    
+	    
+
+
 
 	   
    public static void main(String[] args) {
 
    	App app= new App();
     app.insertBook();
-    app.RemoveByBNo();
+    /*app.RemoveByBNo();
     app.UpdateBkPriceByBNo();
    	app.searchByBookNo();
-   	app.showAll();
+   	app.showAll();*/
+   	//app.showData();
+   	//app.updatebyBookNo();
+    app.removeHQL();
     }
 }
